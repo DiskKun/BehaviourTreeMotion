@@ -21,6 +21,8 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
+			// set the destination to the target
+			navMeshAgent.isStopped = false;
 			NavMeshHit hit;
 			NavMesh.SamplePosition(target.value.position, out hit, 1000, NavMesh.AllAreas);
 			navMeshAgent.SetDestination(hit.position);

@@ -10,11 +10,13 @@ namespace NodeCanvas.Tasks.Conditions {
         NavMeshAgent navMeshAgent;
         public BBParameter<Transform> target;
 		public float detectRange;
+		Rigidbody rb;
 
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit(){
             navMeshAgent = agent.GetComponent<NavMeshAgent>();
+			rb = agent.GetComponent<Rigidbody>();
             return null;
 		}
 
@@ -33,6 +35,8 @@ namespace NodeCanvas.Tasks.Conditions {
 		protected override bool OnCheck() {
 			if (Vector3.Distance(agent.transform.position, target.value.position) < detectRange)
 			{
+				navMeshAgent.isStopped = true;
+				rb.velocity = Vector3.zero;
 				return true;
 			}
 			return false;
